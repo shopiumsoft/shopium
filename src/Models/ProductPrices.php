@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\shop\models;
+namespace Shopium\Models;
 
 use Yii;
 use panix\mod\shop\models\query\ProductQuery;

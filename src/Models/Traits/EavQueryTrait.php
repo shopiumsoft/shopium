@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\shop\models\traits;
+namespace Shopium\Models\Traits;
 
 use panix\mod\shop\components\collections\CList;
 use panix\mod\shop\models\ProductAttributesEav;

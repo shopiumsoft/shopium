@@ -1,18 +1,25 @@
 <?php
 
-namespace panix\mod\shop\models\search;
+namespace Shopium\Models\Search;
 
+use Yii;
+use yii\base\Model;
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\shop\models\ProductNotifications;
+use panix\mod\shop\models\Supplier;
 
-class ProductNotificationsSearch extends ProductNotifications {
+/**
+ * ManufacturerSearch represents the model behind the search form about `panix\shop\models\Manufacturer`.
+ */
+class SupplierSearch extends Supplier {
 
     /**
      * @inheritdoc
      */
     public function rules() {
         return [
-            [['id', 'product_id'], 'integer'],
+            [['id'], 'integer'],
+            [['address','name','phone'], 'safe'],
+            [['email'], 'email'],
         ];
     }
 
@@ -21,23 +28,17 @@ class ProductNotificationsSearch extends ProductNotifications {
      */
     public function scenarios() {
         // bypass scenarios() implementation in the parent class
-        return \yii\base\Model::scenarios();
+        return Model::scenarios();
     }
 
     /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
+     * @param $params
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = ProductNotifications::find();
-        $query->joinWith('product');
-        $query->groupBy('product_id');
+        $query = Supplier::find()->orderBy(['name'=>SORT_ASC]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => self::getSort()
         ]);
 
         $this->load($params);
@@ -49,6 +50,10 @@ class ProductNotificationsSearch extends ProductNotifications {
         }
 
         $query->andFilterWhere(['id' => $this->id]);
+
+        $query->andFilterWhere(['like', 'address', $this->address]);
+        $query->andFilterWhere(['like', 'email', $this->email]);
+        $query->andFilterWhere(['like', 'phone', $this->phone]);
 
         return $dataProvider;
     }

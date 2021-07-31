@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\shop\models;
+namespace Shopium\Models;
 
 use panix\engine\CMS;
 use panix\mod\shop\components\ExternalFinder;

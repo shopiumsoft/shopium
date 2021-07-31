@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\shop\models\query;
+namespace Shopium\Models\Query;
 
 use panix\engine\behaviors\nestedsets\NestedSetsQueryBehavior;
 use yii\db\ActiveQuery;

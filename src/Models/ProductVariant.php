@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\shop\models;
+namespace Shopium\Models;
 
 /**
  * This is the model class for table "ProductVariant".

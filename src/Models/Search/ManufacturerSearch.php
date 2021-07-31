@@ -1,18 +1,16 @@
 <?php
 
-namespace panix\mod\shop\models\search;
+namespace Shopium\Models\Search;
 
 use Yii;
 use yii\base\Model;
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\shop\models\ProductType;
+use panix\mod\shop\models\Manufacturer;
 
 /**
- * PagesSearch represents the model behind the search form about `app\modules\pages\models\Pages`.
+ * ManufacturerSearch represents the model behind the search form about `panix\shop\models\Manufacturer`.
  */
-class ProductTypeSearch extends ProductType {
-
-    public $exclude = null;
+class ManufacturerSearch extends Manufacturer {
 
     /**
      * @inheritdoc
@@ -20,7 +18,7 @@ class ProductTypeSearch extends ProductType {
     public function rules() {
         return [
             [['id'], 'integer'],
-            [['name', 'slug', 'sku', 'price'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -40,10 +38,10 @@ class ProductTypeSearch extends ProductType {
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = ProductType::find();
-
+        $query = Manufacturer::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+           // 'sort' => self::getSort()
         ]);
 
         $this->load($params);
@@ -55,15 +53,7 @@ class ProductTypeSearch extends ProductType {
         }
 
         $query->andFilterWhere(['id' => $this->id]);
-        // Id of product to exclude from search
-        if ($this->exclude) {
-            foreach($this->exclude as $id){
-                  $query->andFilterWhere(['!=', 'id', $id]);
-            }
-        }
-
         $query->andFilterWhere(['like', 'name', $this->name]);
-
 
         return $dataProvider;
     }

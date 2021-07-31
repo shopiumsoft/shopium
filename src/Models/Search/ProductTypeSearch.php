@@ -1,16 +1,18 @@
 <?php
 
-namespace panix\mod\shop\models\search;
+namespace Shopium\Models\Search;
 
 use Yii;
 use yii\base\Model;
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\shop\models\Supplier;
+use panix\mod\shop\models\ProductType;
 
 /**
- * ManufacturerSearch represents the model behind the search form about `panix\shop\models\Manufacturer`.
+ * PagesSearch represents the model behind the search form about `app\modules\pages\models\Pages`.
  */
-class SupplierSearch extends Supplier {
+class ProductTypeSearch extends ProductType {
+
+    public $exclude = null;
 
     /**
      * @inheritdoc
@@ -18,8 +20,7 @@ class SupplierSearch extends Supplier {
     public function rules() {
         return [
             [['id'], 'integer'],
-            [['address','name','phone'], 'safe'],
-            [['email'], 'email'],
+            [['name', 'slug', 'sku', 'price'], 'safe'],
         ];
     }
 
@@ -32,11 +33,15 @@ class SupplierSearch extends Supplier {
     }
 
     /**
-     * @param $params
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
      * @return ActiveDataProvider
      */
     public function search($params) {
-        $query = Supplier::find()->orderBy(['name'=>SORT_ASC]);
+        $query = ProductType::find();
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -50,10 +55,15 @@ class SupplierSearch extends Supplier {
         }
 
         $query->andFilterWhere(['id' => $this->id]);
+        // Id of product to exclude from search
+        if ($this->exclude) {
+            foreach($this->exclude as $id){
+                  $query->andFilterWhere(['!=', 'id', $id]);
+            }
+        }
 
-        $query->andFilterWhere(['like', 'address', $this->address]);
-        $query->andFilterWhere(['like', 'email', $this->email]);
-        $query->andFilterWhere(['like', 'phone', $this->phone]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
+
 
         return $dataProvider;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\shop\models\search;
+namespace Shopium\Models\Search;
 
 use panix\engine\CMS;
 use panix\mod\shop\models\Attribute;

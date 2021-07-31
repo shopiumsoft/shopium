@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\shop\models\query;
+namespace Shopium\Models\Query;
 
 use Yii;
 use panix\mod\shop\models\Currency;

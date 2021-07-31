@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\shop\models\query;
+namespace Shopium\Models\Query;
 
 use panix\engine\traits\query\TranslateQueryTrait;
 use yii\db\ActiveQuery;

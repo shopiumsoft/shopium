@@ -1,6 +1,6 @@
 <?php
 
-namespace panix\mod\shop\models\traits;
+namespace Shopium\Models\Traits;
 
 use Yii;
 use yii\helpers\ArrayHelper;

@@ -1,16 +1,16 @@
 <?php
 
-namespace panix\mod\shop\models\search;
+namespace Shopium\Models\Search;
 
 use Yii;
 use yii\base\Model;
 use panix\engine\data\ActiveDataProvider;
-use panix\mod\shop\models\ProductReviews;
+use panix\mod\shop\models\Currency;
 
 /**
- * ProductReviewsSearch represents the model behind the search form about `panix\shop\models\Manufacturer`.
+ * CurrencySearch represents the model behind the search form about `panix\shop\models\Currency`.
  */
-class ProductReviewsSearch extends ProductReviews
+class CurrencySearch extends Currency
 {
 
     /**
@@ -19,9 +19,9 @@ class ProductReviewsSearch extends ProductReviews
     public function rules()
     {
         return [
-            [['id', 'product_id','rate'], 'integer'],
-            [['text'], 'string'],
-            [['text'], 'safe'],
+            [['id'], 'integer'],
+            [['name', 'slug', 'is_default', 'is_main'], 'safe'],
+            [['is_default', 'is_main'], 'boolean'],
         ];
     }
 
@@ -43,10 +43,12 @@ class ProductReviewsSearch extends ProductReviews
      */
     public function search($params)
     {
-        $query = ProductReviews::find()->where(['depth' => 1])->orderBy(['status' => SORT_ASC, 'created_at' => SORT_DESC]);//->groupBy('product_id');
+        $query = Currency::find();
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            // 'sort' => self::getSort()
+            'sort' => ['defaultOrder' => ['ordern' => SORT_DESC]],
+
         ]);
 
         $this->load($params);
@@ -57,10 +59,13 @@ class ProductReviewsSearch extends ProductReviews
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['id' => $this->id]);
-        $query->andFilterWhere(['product_id' => $this->product_id]);
-        $query->andFilterWhere(['like', 'text', $this->text]);
-        $query->andFilterWhere(['like', 'rate', $this->rate]);
+        $query->andFilterWhere([
+            'id' => $this->id,
+        ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'is_default', $this->is_default]);
+        $query->andFilterWhere(['like', 'is_main', $this->is_main]);
 
         return $dataProvider;
     }
