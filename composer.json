@@ -1,0 +1,23 @@
+{
+    "name": "shopium/shopium",
+    "description": "Shopium",
+    "keywords": [],
+    "homepage": "https://github.com/shopiumsoft/shopium",
+    "type": "extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Panix",
+            "email": "dev@pixelion.com.ua",
+            "homepage": "https://pixelion.com.ua"
+        }
+    ],
+    "require": {
+        "panix/engine": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "shopium\\src\\": ""
+        }
+    }
+}
